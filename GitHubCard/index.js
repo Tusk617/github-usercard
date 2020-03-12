@@ -2,7 +2,10 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-
+// axios.get('https://api.github.com/users/Tusk617')
+// .then(result => {
+//   console.log(result);
+// })
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +48,46 @@ const followersArray = [];
 </div>
 
 */
+
+function cardCreator(single){
+  // variable creation
+  const card = document.createElement('div'),
+        profilePic = document.createElement('img'),
+        cardInfo = document.createElement('div'),
+        name = document.createElement('h3'),
+        username = document.createElement('p'),
+        location = document.createElement('p'),
+        profile = document.createElement('p'),
+        pageAddy = document.createElement('a'),
+        followers = document.createElement('p'),
+        following = document.createElement('p'),
+        bio = document.createElement('p');
+
+  // Class distribution
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+
+  // Appending/Nesting
+  card.appendChild(profilePic, cardInfo);
+  cardInfo.appendChild(name, username, location,
+     profile, pageAddy, followers, following, bio);
+  profile.appendChild(pageAddy)
+  
+
+  return card;
+}
+
+/* Step 4: Pass the data received from Github into your function, 
+           create a new component and add it to the DOM as a child of .cards
+*/
+
+axios.get('https://api.github.com/users/Tusk617')
+.then(response => {
+    let person = cardCreator(response);
+    document.querySelector('.cards').appendChild(person);
+})
 
 /* List of LS Instructors Github username's: 
   tetondan
