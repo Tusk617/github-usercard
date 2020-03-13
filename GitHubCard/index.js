@@ -27,7 +27,8 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -49,19 +50,19 @@ const followersArray = [];
 
 */
 
-function cardCreator(single){
+function cardCreator(obj){
   // variable creation
-  const card = document.createElement('div'),
-        profilePic = document.createElement('img'),
-        cardInfo = document.createElement('div'),
-        name = document.createElement('h3'),
-        username = document.createElement('p'),
-        location = document.createElement('p'),
-        profile = document.createElement('p'),
-        pageAddy = document.createElement('a'),
-        followers = document.createElement('p'),
-        following = document.createElement('p'),
-        bio = document.createElement('p');
+  const card = document.createElement('div');
+  const profilePic = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const pageAddy = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
 
   // Class distribution
   card.classList.add('card');
@@ -69,11 +70,26 @@ function cardCreator(single){
   name.classList.add('name');
   username.classList.add('username');
 
+  
+  //Text content
+  location.textContent = `Location: ${obj.location}`;
+  profile.textContent = 'Profile:';
+  followers.textContent = `Followers: ${obj.followers}`;
+  following.textContent = `Following: ${obj.following}`;
+
+  profilePic.src = obj.avatar_url;
+  name.textContent = obj.name;
+  username.textContent = obj.login;
+  pageAddy.textContent = obj.html_url;
+  pageAddy.href = obj.html_url;
+  
+
   // Appending/Nesting
-  card.appendChild(profilePic, cardInfo);
-  cardInfo.appendChild(name, username, location,
+  card.append(profilePic, cardInfo);
+  cardInfo.append(name, username, location,
      profile, pageAddy, followers, following, bio);
-  profile.appendChild(pageAddy)
+  profile.append(pageAddy); 
+  
   
 
   return card;
@@ -85,8 +101,25 @@ function cardCreator(single){
 
 axios.get('https://api.github.com/users/Tusk617')
 .then(response => {
-    let person = cardCreator(response);
+    let person = cardCreator(response.data);
     document.querySelector('.cards').appendChild(person);
+    console.log(person);
+    console.log(response);
+})
+.catch(error => {
+  console.log('Sorry ,we ran into an error', error);
+})
+
+// const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach( item => {
+axios.get(`https://api.github.com/users/${item}`)
+.then(response => {
+  let person = cardCreator(response.data);
+    document.querySelector('.cards').appendChild(person);
+    console.log(person);
+    console.log(response);
+})
 })
 
 /* List of LS Instructors Github username's: 
