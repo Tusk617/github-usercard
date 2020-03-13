@@ -76,6 +76,7 @@ function cardCreator(obj){
   profile.textContent = 'Profile:';
   followers.textContent = `Followers: ${obj.followers}`;
   following.textContent = `Following: ${obj.following}`;
+  bio.textContent = `Bio: ${obj.bio}`
 
   profilePic.src = obj.avatar_url;
   name.textContent = obj.name;
